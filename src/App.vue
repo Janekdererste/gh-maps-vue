@@ -12,8 +12,7 @@
 import {Options, Vue} from "vue-class-component";
 import Sidebar from "@/components/Sidebar.vue";
 import MapComponent from "@/components/MapComponent.vue";
-import {doRequest} from "./GraphhopperRouting";
-
+import { doRequest } from "@/GraphhopperRouting";
 
 const ghKey = 'fb45b8b2-fdda-4093-ac1a-8b57b4e50add'
 
