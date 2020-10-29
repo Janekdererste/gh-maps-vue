@@ -12,8 +12,8 @@
 import {Options, Vue} from "vue-class-component";
 import Sidebar from "@/components/Sidebar.vue";
 import MapComponent from "@/components/MapComponent.vue";
+import {doRequest} from "./GraphhopperRouting";
 
-require('graphhopper-js-api-client')
 
 const ghKey = 'fb45b8b2-fdda-4093-ac1a-8b57b4e50add'
 
@@ -30,18 +30,11 @@ export default class App extends Vue {
   private async handleSubmit(from: [number, number], to: [number, number]) {
     console.log('from: ' + from + ' to: ' + to)
 
-    //const routing = Graphhopper.Routing()
-    const routing = new Graphhopper.Routing({
-      key: ghKey,
-      vehicle: 'car',
-      elevation: false
-    })
-
-    // routing.addPoint(new Graphhopper.Input(from[0], from[1]))
-    // routing.addPoint(new Graphhopper.Input(to[0], to[1]))
-
     try {
-      const result = await routing.doRequest()
+      const result = await doRequest({
+        key: ghKey,
+        points: [from, to]
+      })
       console.log(result)
       if (result.paths.length > 0)
         this.path = result.paths[0]
