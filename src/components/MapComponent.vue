@@ -3,29 +3,29 @@
 </template>
 
 <script lang="ts">
+import { Vue } from "vue-class-component";
 
-import {Vue} from "vue-class-component";
-
-// import mapbox like this instead of {Map} from 'mapbox-gl' because otherwise the app is missing some global mapbox state
-import * as mapbox from 'mapbox-gl'
-
+import { Prop, Watch } from "vue-property-decorator";
+import Mapbox from "./Mapbox";
 
 export default class MapComponent extends Vue {
-
+  private map!: Mapbox;
   $refs!: {
-    mapContainer: HTMLDivElement
+    mapContainer: HTMLDivElement;
+  };
+
+  // expose property to which parent component can bin
+  @Prop() private points: any = null;
+
+  // watch for changes of points property to manipulate map
+  @Watch("points") onChange(val: any, oldVal: any) {
+    console.log("on points changed");
+    this.map.updateGeometry(val);
   }
 
   mounted() {
-    const map = new mapbox.Map({
-      accessToken: 'pk.eyJ1IjoiamFuZWtkZXJlcnN0ZSIsImEiOiJjajd1ZDB6a3A0dnYwMnFtamx6eWJzYW16In0.9vY7vIQAoOuPj7rg1A_pfw',
-      container: this.$refs.mapContainer,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [0, 0],
-      zoom: 9
-    })
+    this.map = new Mapbox(this.$refs.mapContainer);
   }
-
 }
 </script>
 

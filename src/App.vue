@@ -1,9 +1,13 @@
 <template>
   <div class="map">
-    <MapComponent />
+    <MapComponent v-bind:points="points" />
   </div>
   <div class="sidebar">
-    <Sidebar v-on:submit="handleSubmit" />
+    <Sidebar
+      v-on:submit="handleSubmit"
+      v-bind:instructions="instructions"
+      v-bind:message="message"
+    />
   </div>
 </template>
 
@@ -22,7 +26,20 @@ const ghKey = "fb45b8b2-fdda-4093-ac1a-8b57b4e50add";
   }
 })
 export default class App extends Vue {
-  private path?: any;
+  // set to null to make this reactive as in https://class-component.vuejs.org/guide/class-component.html#data
+  private path?: any = null;
+
+  private message = "";
+
+  get instructions() {
+    console.log("get instructions");
+    return this.path ? this.path.instructions : [];
+  }
+
+  get points() {
+    console.log("get points");
+    return this.path ? this.path.points : [];
+  }
 
   private async handleSubmit(from: [number, number], to: [number, number]) {
     console.log("from: " + from + " to: " + to);
@@ -33,7 +50,10 @@ export default class App extends Vue {
         points: [from, to]
       });
       console.log(result);
-      if (result.paths.length > 0) this.path = result.paths[0];
+      if (result.paths && result.paths.length && result.paths.length > 0) {
+        this.path = result.paths[0];
+        this.message = " some message ";
+      } else throw Error("unexpected result");
     } catch (error) {
       console.error(error);
     }

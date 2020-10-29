@@ -69,7 +69,6 @@ function copyOptions(args: Args): Options {
 
 function createPointParams(points: [number, number][]): [string, string][] {
   return points.map(point => {
-    console.log(point);
     return ["point", point[0] + "," + point[1]];
   });
 }
@@ -87,7 +86,6 @@ function createURL(
     if (key === "points") {
       const points = value as [number, number][];
       createPointParams(points).forEach(param => {
-        console.log(param);
         url.searchParams.append(param[0], param[1]);
       });
     } else {
