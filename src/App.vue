@@ -32,17 +32,14 @@ export default class App extends Vue {
   private message = "";
 
   get instructions() {
-    console.log("get instructions");
     return this.path ? this.path.instructions : [];
   }
 
   get points() {
-    console.log("get points");
     return this.path ? this.path.points : [];
   }
 
   get bbox() {
-    console.log("get bbox");
     return this.path ? this.path.bbox : [0, 0, 0, 0];
   }
 
@@ -54,7 +51,6 @@ export default class App extends Vue {
         key: ghKey,
         points: [from, to]
       });
-      console.log(result);
       if (result.paths && result.paths.length && result.paths.length > 0) {
         this.path = result.paths[0];
         this.message = " some message ";

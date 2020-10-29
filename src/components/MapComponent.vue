@@ -16,20 +16,17 @@ export default class MapComponent extends Vue {
 
   // expose property to which parent component can bin
   @Prop() private points: any = null;
+  @Prop() private bbox: [number, number, number, number] | null = null;
 
   // watch for changes of points property to manipulate map
   @Watch("points") onPointsChanged(val: any, oldVal: any) {
-    console.log("on points changed");
     this.map.updateGeometry(val);
   }
 
-  @Prop() private bbox: [number, number, number, number] | null = null;
-
   @Watch("bbox") onBboxChanged(
     val: [number, number, number, number],
-    oldVal: any
+    oldVal: [number, number, number, number]
   ) {
-    console.log("on bbox changed");
     this.map.fitToExtent(val);
   }
 
