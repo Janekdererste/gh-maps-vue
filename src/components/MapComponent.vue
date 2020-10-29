@@ -18,9 +18,19 @@ export default class MapComponent extends Vue {
   @Prop() private points: any = null;
 
   // watch for changes of points property to manipulate map
-  @Watch("points") onChange(val: any, oldVal: any) {
+  @Watch("points") onPointsChanged(val: any, oldVal: any) {
     console.log("on points changed");
     this.map.updateGeometry(val);
+  }
+
+  @Prop() private bbox: [number, number, number, number] | null = null;
+
+  @Watch("bbox") onBboxChanged(
+    val: [number, number, number, number],
+    oldVal: any
+  ) {
+    console.log("on bbox changed");
+    this.map.fitToExtent(val);
   }
 
   mounted() {

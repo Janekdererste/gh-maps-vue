@@ -18,7 +18,7 @@ export default class Mapbox {
       container: container,
       style: "mapbox://styles/mapbox/streets-v11",
       center: [0, 0],
-      zoom: 9
+      zoom: 0
     });
     this.map.on("load", ev => this.initLineLayer());
   }
@@ -92,6 +92,13 @@ export default class Mapbox {
           }
         }
       ]
+    });
+  }
+
+  public fitToExtent(extent: [number, number, number, number]) {
+    const bounds = new mapbox.LngLatBounds(extent);
+    this.map.fitBounds(bounds, {
+      padding: { top: 100, bottom: 100, right: 100, left: 400 }
     });
   }
 

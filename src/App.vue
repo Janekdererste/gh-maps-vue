@@ -1,6 +1,6 @@
 <template>
   <div class="map">
-    <MapComponent v-bind:points="points" />
+    <MapComponent v-bind:points="points" v-bind:bbox="bbox" />
   </div>
   <div class="sidebar">
     <Sidebar
@@ -39,6 +39,11 @@ export default class App extends Vue {
   get points() {
     console.log("get points");
     return this.path ? this.path.points : [];
+  }
+
+  get bbox() {
+    console.log("get bbox");
+    return this.path ? this.path.bbox : [0, 0, 0, 0];
   }
 
   private async handleSubmit(from: [number, number], to: [number, number]) {
